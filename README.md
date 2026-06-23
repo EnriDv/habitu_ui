@@ -1,39 +1,66 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# habitu_ui
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+`habitu_ui` es el package de UI compartida de Habitu. Aquí viven los tokens, el tema, los widgets base, los bloques visuales extraídos desde la app principal y el catálogo visual para revisar componentes de forma aislada.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Qué contiene
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- Tokens visuales: color, tipografía y tema.
+- Widgets core: `HabituButton`, `HabituCard`, `HabituNavigationBar`.
+- Widgets de foundations: métricas, estados vacíos, secciones, notices y switchers.
+- Widgets de dominio desacoplados mediante props y callbacks.
+- Una app de catálogo con Widgetbook en `widgetbook/`.
 
-## Features
+## Estructura
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```text
+lib/
+  habitu_ui.dart
+  src/
+    models/
+    theme/
+    tokens/
+    widgets/
+      core/
+      foundations/
+      habits/
+      social/
+widgetbook/
+docs/
 ```
 
-## Additional information
+## Convención de widgets
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+- `habitu_ui` no importa notifiers, repositorios ni servicios de `habitu`.
+- Todo dato de negocio llega como props o view models puros.
+- Los side effects se inyectan con callbacks desde la app principal.
+- Los bloques visuales extraídos desde pantallas viven en `widgets/foundations/`.
+
+## Cómo agregar un widget
+
+1. Crear o mover el widget a la carpeta adecuada dentro de `lib/src/widgets`.
+2. Si depende de datos de negocio, crear un view model en `lib/src/models`.
+3. Exportarlo desde `lib/habitu_ui.dart`.
+4. Agregar al menos un caso visible en `widgetbook/lib/main.dart`.
+5. Añadir o actualizar tests si el widget tiene lógica visual importante.
+
+## Cómo ejecutar Widgetbook
+
+```bash
+cd widgetbook
+flutter pub get
+flutter run
+```
+
+## Cómo consumir desde `habitu`
+
+La dependencia oficial debe venir por Git:
+
+```yaml
+dependencies:
+  habitu_ui:
+    git:
+      url: https://github.com/EnriDv/habitu_ui.git
+      ref: main
+```
+
+Para desarrollo local en esta workspace, `habitu` puede usar `pubspec_overrides.yaml` apuntando a `../habitu_ui` sin tocar la dependencia oficial.

@@ -1,0 +1,19 @@
+name: habitu_ui_widgetbook
+publish_to: none
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  habitu_ui:
+    path: ../
+  widgetbook: ^3.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
